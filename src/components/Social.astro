@@ -1,0 +1,15 @@
+---
+// vars to receive and destructure props when passed in from where this component is used (which is in the Footer.astro component)
+const { platform, username } = Astro.props; // Makes these props avail for use in HTML section below
+---
+<a href={`https://www.${platform}.com/${username}`}>{platform}</a>
+
+<!-- Can add component-specific styles in a <style> tag below content -->
+ <style>
+  a {
+    padding: 0.5rem 1rem;
+    color: white;
+    background-color: #4c1d95;
+    text-decoration: none;
+  }
+ </style>

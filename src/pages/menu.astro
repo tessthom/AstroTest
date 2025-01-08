@@ -1,21 +1,23 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BlogPost from '../components/BlogPost.astro';
+// The following expression:
+// 1. finds all .md files in the posts/ directory and immediately imports the content of those files thanks to { eager: true }. glob() is a Vite/Astro method that looks in the spec'd directory and returns an object with key:value pairs of all matching fileNames:content.
+// 2. Object.values() is a static method that extracts all the values from the arg and returns them as an array. In this case it takes an object of filePaths:theirContent and turns it into an array of just the content of every matching .md file.
+const allPosts = Object.values(import.meta.glob('./posts/*.md', { eager: true })); 
 
+const pageTitle = 'Menus';
 ---
-
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Menu</title>
-	</head>
-	<body>
-    <a href="/">Home</a>
-    <a href="/about/">About</a>
-    <a href="/location/">Location</a>
-    <a href="/menu/">Menu</a>
-
-		<h1>Menus</h1>
-	</body>
-</html>
+<BaseLayout>
+	<p>Boop bop links to posts</p>
+	<ul>
+		<!-- <li><a href="/posts/post-1">Post 1</a></li>
+		<li><a href="/posts/post-2">Post 2</a></li>
+		<li><a href="/posts/post-3">Post 3</a></li> -->
+		<!-- Instead of the above, since adding the Object.values() expression, can map over the allPosts array and extract the URL value for each .md post file from the it -->
+		 <!-- THE FOLLOWING LINE REPLACED AFTER REFACTORING THE <li>s as a component -->
+		<!-- {allPosts.map((post: any) => <li><a href={post.url}>{post.frontmatter.title}</a></li>)} -->
+		 <!-- :any is a TypeScript syntax type annotation that indicates that the post can be of any type. you ref post.frontmatter.title for each link's display text because Astro gives you access to the frontmatter data in the posts' value -->
+		{allPosts.map((post: any) => <BlogPost url={post.url} title={post.frontmatter.title}></BlogPost>)}
+	</ul>
+</BaseLayout>

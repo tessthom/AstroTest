@@ -1,25 +1,62 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
 
+const pageTitle = 'About Us';
+
+const identity = {
+	firstName: 'Tess',
+	country: 'Canada',
+	occupation: 'Web Developer',
+	hobbies: ['ceramics', 'pizza making', 'lesbianism'],
+};
+
+const skills = ['HTML', 'CSS', 'JavaScript', 'React', 'Astro', 'Copywriting', 'Design'];
+
+const happy = true;
+const finished = true;
+const goal = 3;
+
+const skillColor = 'navy';
+const fontWeight = 'bold';
+const textCase = 'uppercase';
 ---
+<BaseLayout pageTitle={pageTitle}>
+	<!-- The is:global attribute lets you spec the <style> element inside the <body> tag and affect every element on this page, including those created by other components. -->
+	<style is:global define:vars={{skillColor, fontWeight, textCase}}>
+		h1 {
+			color: purple;
+			font-size: 4rem;
+		}
+		.skill {
+			color: var(--skillColor);
+			font-weight: var(--fontWeight);
+			text-transform: var(--textCase);
+		}
+	</style>
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>About</title>
-	</head>
-	<body>
-    <a href="/">Home</a>
-    <a href="/about/">About</a>
-    <a href="/location/">Location</a>
-    <a href="/menu/">Menu</a>
+	<h2>Meet the Dainer</h2>
+	<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Optio dolore minus dolor quibusdam quae qui! Quia aperiam tempora, ipsa porro, ab possimus delectus consequatur ex et ad blanditiis, officiis praesentium.
+	Praesentium recusandae, pariatur iste esse suscipit consequatur sunt laborum, id at optio quaerat rem quasi eius molestiae.
+	Iure accusantium non porro sed architecto velit! Saepe facilis eveniet dolor, optio, placeat consequuntur fuga incidunt sed quaerat ea quod officia ad exercitationem sit!</p>
 
-		<h1>About</h1>
-    <h2>Meet the Dainer</h2>
-    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Optio dolore minus dolor quibusdam quae qui! Quia aperiam tempora, ipsa porro, ab possimus delectus consequatur ex et ad blanditiis, officiis praesentium.
-    Praesentium recusandae, pariatur iste esse suscipit consequatur sunt laborum, id at optio quaerat rem quasi eius molestiae.
-    Iure accusantium non, nesciunt eligendi minus eos porro sed architecto velit! Saepe facilis eveniet dolor, optio, sunt inventore placeat consequuntur fuga incidunt sed quaerat ea quod officia ad exercitationem sit!</p>
-	</body>
-</html>
+	<p>Here are a few fun facts about me:</p>
+	<ul>
+		<li>My name is {identity.firstName}</li>
+		<li>I live in {identity.country} and I work as a {identity.occupation}.</li>
+		<!-- Put JS in curlies if you need to include logic in the HTML section of your .astro files. The following is conditional logic using the && logical operator to only add this <li> if the hobbies array contains 2+ items. -->
+		{identity.hobbies.length >= 2 &&
+			<li>Two of my hobbies are: {identity.hobbies[0]} and {identity.hobbies[1]}</li>
+		}
+	</ul>
+	<p>My skills are:</p>
+	<ul>
+		<!-- This JS maps over the skills array and generates a <li> for each item. -->
+		{skills.map(skill => <li class="skill">{skill}</li>)}
+	</ul>
+
+	<!-- These lines conditionally render elements based on the values set to variables in the frontmatter above -->
+		{happy && <p>I am happy to be learning Astro!</p>}
+		{finished && <p>I finished this tutorial!</p>}
+		{goal === 3 ? <p>My goal is to finish in 3 days.</p> : <p>My goal is not 3 days.</p>}
+
+</BaseLayout>

@@ -1,0 +1,3 @@
+document.querySelector('.hamburger')?.addEventListener('click', () => {
+  document.querySelector('.nav-links')?.classList.toggle('expanded');
+}); // the `?` are optional chaining operators. used for DOM manipulation instead of more verbose checks that make sure elements exist before being manipulated. will only access the property or method appended if the object being accessed isn't null or undefined. 

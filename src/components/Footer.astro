@@ -1,0 +1,18 @@
+---
+// importing social component, then passing in props for platform and username
+import Social from './Social.astro';
+---
+<footer>
+  <!-- Passing in props to Social.astro component -->
+  <Social platform="linkedin" username="tessthomas" />
+  <Social platform="github" username="tessthom" />
+  <Social platform="tessthomas" username="" />
+</footer>
+
+<style>
+  footer {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+</style>

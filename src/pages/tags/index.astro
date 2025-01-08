@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// get array of all post markdown files' data
+const allPosts = Object.values(import.meta.glob('../posts/*.md', { eager: true }));
+// get a flattened array of all *unique* tags. they're unique because `Set` is a built-in JS object that only allows unique values. so, mapping over allPosts creates an array of arrays, where each sub-array has all the tags from an individual post. then flat() flattens that into one array. 
+const allUniqueTags = [...new Set(allPosts.map((post: any) => post.frontmatter.tags).flat())];
+const pageTitle = 'Tag Index';
+---
+<BaseLayout pageTitle={pageTitle}>
+  <!-- map over the unique tags array and create a link in a paragraph for each. spec the tag slug on the href value to dynamically create a relative path to the post each tag is from -->
+  <div class="tags">
+    {allUniqueTags.map((tag) => (
+      <p class="tag"><a href={`/tags/${tag}`}>{tag}</a></p>
+    ))}
+  </div>
+</BaseLayout>
+
+<style>
+  a {
+    color: #00539f;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    margin: 0.25em;
+    border: dotted 1px #a1a1a1;
+    border-radius: 0.5em;
+    padding: 0.5em 1em;
+    font-size: 1.15em;
+    background-color: #f8fcfd;
+  }
+</style>

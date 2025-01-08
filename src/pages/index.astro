@@ -1,21 +1,11 @@
 ---
-
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Greeting from '../components/Greeting';
+const pageTitle = 'Dain\'s Home';
 ---
-
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-    <a href="/">Home</a>
-    <a href="/about/">About</a>
-    <a href="/location/">Location</a>
-    <a href="/menu/">Menu</a>
-
-		<h1>My Astro Site</h1>
-	</body>
-</html>
+<BaseLayout pageTitle={pageTitle}>
+	<h2>I'm spec'd in index.astro, and being inserted into the BaseLayout layout component via the &lt;slot /&gt; element.</h2>
+	<Greeting messages={['Hi', 'Hello', 'Howdy', 'Hey there']} />
+	<!-- the second button works bc client:load directive is spec'd, which tells Astro to send and rerun its JS on the CLIENT when the page LOADS, making it interactive, i.e., "HYDRATING" it. -->
+	<Greeting client:load messages={['Hi', 'Hello', 'Howdy', 'Hey there']} />
+</BaseLayout>
